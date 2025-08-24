@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn & Play</title>
+    <meta name="description" content="A clean, modern, and fun educational website for kids to learn shapes, colors, numbers, alphabet, animals, and basic maths.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😊</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #5A67D8;
+            --color-primary-light: #E0E3FF;
+            --color-background: #F7F9FC;
+            --color-card: #FFFFFF;
+            --color-text: #3D4852;
+            --color-text-secondary: #8795A1;
+            --color-border: #EAEFF5;
+            --color-success: #38A169;
+            --color-error: #E53E3E;
+            --color-warning: #DD6B20;
+            --color-shadow: rgba(90, 103, 216, 0.15);
+            --font-family-base: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.5rem;
+            --font-size-2xl: 2rem;
+            --font-size-3xl: 2.75rem;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2.5rem;
+            --spacing-2xl: 4rem;
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .high-contrast {
+            --color-background: #000000;
+            --color-card: #111111;
+            --color-text: #FFFFFF;
+            --color-text-secondary: #CCCCCC;
+            --color-border: #555555;
+            --color-shadow: rgba(255, 255, 255, 0.1);
+        }
+
+        .text-small {
+            --font-size-base: 0.875rem;
+            --font-size-lg: 1rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.75rem;
+            --font-size-3xl: 2.25rem;
+        }
+
+        .text-large {
+            --font-size-base: 1.125rem;
+            --font-size-lg: 1.5rem;
+            --font-size-xl: 2rem;
+            --font-size-2xl: 2.75rem;
+            --font-size-3xl: 3.5rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        *:focus-visible {
+            outline: 3px solid var(--color-primary);
+            outline-offset: 3px;
+            border-radius: var(--border-radius);
+        }
+        *:focus:not(:focus-visible) {
+             outline: none;
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--color-card);
+            border-right: 1px solid var(--color-border);
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            z-index: 1001;
+        }
+
+        .main-content-area {
+            flex: 1;
+            padding: var(--spacing-xl);
+            overflow-y: auto;
+        }
+
+        .brand {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            color: var(--color-primary);
+            text-align: center;
+            padding-bottom: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .main-nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            flex-grow: 1;
+        }
+        
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-align: left;
+            width: 100%;
+        }
+
+        .nav-btn:hover,
+        .nav-btn:focus-visible {
+            color: var(--color-primary);
+            background-color: var(--color-primary-light);
+        }
+
+        .nav-btn.active {
+            background: var(--color-primary);
+            color: white;
+            box-shadow: 0 4px 12px var(--color-shadow);
+        }
+
+        .nav-icon {
+            font-size: var(--font-size-lg);
+            width: 24px;
+            text-align: center;
+        }
+        
+        .content-section { display: none; }
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            color: var(--color-text);
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--color-primary);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .learning-card {
+            background: var(--color-card);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 25px var(--color-shadow);
+            position: relative;
+            border: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-sm);
+            aspect-ratio: 1 / 1;
+        }
+        
+        .number-card {
+            justify-content: center;
+        }
+
+        .learning-card:hover,
+        .learning-card:focus-visible {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 30px var(--color-shadow);
+            border-color: var(--color-primary);
+        }
+
+        .learning-card:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .card-visual {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .shape-svg, .color-tile {
+            width: 90px;
+            height: 90px;
+        }
+        .color-tile {
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .shape-svg { color: var(--color-primary); }
+
+        .number-display, .alphabet-display, .animal-emoji {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        .animal-emoji {
+             font-size: 3.5rem;
+        }
+        .number-display {
+            font-size: clamp(1.5rem, 8vw, 2.5rem);
+        }
+        .alphabet-display span {
+            padding: 0 0.1em;
+        }
+
+        .dots-display { font-size: var(--font-size-base); }
+        .alphabet-emoji-display { font-size: 2.5rem; }
+
+        .card-label {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--color-text);
+        }
+        .fun-fact {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            padding: 0 var(--spacing-xs);
+        }
+
+        .speak-btn {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: var(--color-primary-light);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        .learning-card:hover .speak-btn,
+        .learning-card:focus-within .speak-btn {
+             opacity: 1;
+             transform: scale(1);
+        }
+        .speak-btn:hover,
+        .speak-btn:focus-visible {
+            transform: scale(1.15);
+            background: var(--color-primary);
+            color: white;
+        }
+
+        #maths-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .math-op-selector {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        .math-op-btn {
+            background-color: var(--color-card);
+            border: 2px solid var(--color-border);
+            color: var(--color-text-secondary);
+        }
+        .math-op-btn.active {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+        .math-problem-display {
+            background-color: var(--color-card);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: 0 8px 25px var(--color-shadow);
+        }
+        #math-problem-visual {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+            min-height: 50px;
+        }
+        #math-problem-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            min-height: 45px;
+        }
+        #math-options-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+        .math-option-btn {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-xl);
+            background-color: var(--color-card);
+            border: 2px solid var(--color-border);
+        }
+        .math-option-btn.correct {
+            border-color: var(--color-success);
+            background-color: #EAFBF2;
+        }
+        .math-option-btn.incorrect {
+            border-color: var(--color-error);
+            background-color: #FFF5F5;
+        }
+        #math-feedback {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            min-height: 30px;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .number-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+        }
+        .number-nav-btn {
+             background-color: var(--color-card);
+            border: 2px solid var(--color-border);
+            color: var(--color-text-secondary);
+            padding: var(--spacing-sm) var(--spacing-md);
+        }
+        .number-nav-btn.active {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+
+
+        .quiz-container { max-width: 800px; margin: 0 auto; text-align: center; }
+        .quiz-prompt {
+            background: var(--color-card);
+            color: var(--color-text);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            border: 1px solid var(--color-border);
+        }
+        .quiz-score {
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            display: inline-block;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .quiz-option {
+            background: var(--color-card);
+            border: 2px solid var(--color-border);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            transition: var(--transition);
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .quiz-option:hover,
+        .quiz-option:focus-visible {
+            transform: translateY(-5px);
+            border-color: var(--color-primary);
+            box-shadow: 0 8px 20px var(--color-shadow);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--color-success);
+            background: #EAFBF2;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--color-error);
+            background: #FFF5F5;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes correctPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-5px); }
+          75% { transform: translateX(5px); }
+        }
+
+        .quiz-btn, .math-btn {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .quiz-btn:hover, .quiz-btn:focus-visible,
+        .math-btn:hover, .math-btn:focus-visible {
+            background: var(--color-success);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px var(--color-shadow);
+        }
+        .quiz-controls {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--color-card);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transform: scale(0.95);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: var(--spacing-md);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: var(--font-size-2xl);
+            cursor: pointer;
+            color: var(--color-text-secondary);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .modal-close:hover, .modal-close:focus-visible {
+            background: var(--color-error);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .setting-group { margin-bottom: var(--spacing-lg); }
+        .setting-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-text);
+        }
+        .setting-input, .setting-slider {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-border);
+            border-radius: var(--border-radius);
+            background: var(--color-background);
+            color: var(--color-text);
+            font-size: var(--font-size-base);
+            transition: var(--transition);
+        }
+        .setting-input:focus, .setting-slider:focus { border-color: var(--color-primary); }
+
+        .text-size-controls {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        .text-size-btn {
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        .text-size-btn:hover, .text-size-btn:focus-visible {
+            background: var(--color-primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .card-animate { animation: cardPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes cardPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+            }
+            .main-nav {
+                flex-direction: row;
+                justify-content: center;
+                flex-grow: 0;
+            }
+            .nav-btn span:not(.nav-icon) {
+                display: none;
+            }
+            .nav-btn {
+                flex-direction: column;
+            }
+            .brand {
+                text-align: left;
+                padding: 0;
+                margin: 0;
+                border: none;
+            }
+            .sidebar {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .settings-btn, .about-btn {
+                width: auto;
+            }
+        }
+        
+        @media print {
+          .sidebar, .settings-btn, .about-btn, .speak-btn, .quiz-controls, .modal-overlay { display: none !important; }
+          .app-container { display: block; }
+          .main-content-area { padding: 0; }
+          .learning-card { break-inside: avoid; box-shadow: none; border: 2px solid var(--color-border); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <h1 class="brand">Learn & Play</h1>
+            <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                <button class="nav-btn active" data-section="shapes" aria-pressed="true"><span class="nav-icon">🔺</span><span>Shapes</span></button>
+                <button class="nav-btn" data-section="colors" aria-pressed="false"><span class="nav-icon">🎨</span><span>Colors</span></button>
+                <button class="nav-btn" data-section="numbers" aria-pressed="false"><span class="nav-icon">🔢</span><span>Numbers</span></button>
+                <button class="nav-btn" data-section="alphabet" aria-pressed="false"><span class="nav-icon">🔤</span><span>Alphabet</span></button>
+                <button class="nav-btn" data-section="animals" aria-pressed="false"><span class="nav-icon">🐾</span><span>Animals</span></button>
+                <button class="nav-btn" data-section="maths" aria-pressed="false"><span class="nav-icon">🧮</span><span>Maths</span></button>
+                <button class="nav-btn" data-section="quiz" aria-pressed="false"><span class="nav-icon">🧩</span><span>Quiz</span></button>
+                <div class="sidebar-footer">
+                    <button class="nav-btn settings-btn" aria-label="Open settings" title="Settings">
+                        <span class="nav-icon">⚙️</span>
+                        <span>Settings</span>
+                    </button>
+                    <button class="nav-btn about-btn" aria-label="Open about information">
+                        <span class="nav-icon">ℹ️</span>
+                        <span>About</span>
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content-area">
+            <section id="shapes" class="content-section active" role="main" aria-labelledby="shapes-title">
+                <h2 id="shapes-title" class="section-title">Learn Shapes</h2>
+                <div class="grid-container" id="shapes-grid"></div>
+            </section>
+
+            <section id="colors" class="content-section" role="main" aria-labelledby="colors-title">
+                <h2 id="colors-title" class="section-title">Learn Colors</h2>
+                <div class="grid-container" id="colors-grid"></div>
+            </section>
+
+            <section id="numbers" class="content-section" role="main" aria-labelledby="numbers-title">
+                <h2 id="numbers-title" class="section-title">Learn Numbers</h2>
+                <div class="number-nav" id="number-nav-container"></div>
+                <div class="grid-container" id="numbers-grid"></div>
+            </section>
+
+            <section id="alphabet" class="content-section" role="main" aria-labelledby="alphabet-title">
+                <h2 id="alphabet-title" class="section-title">Learn the Alphabet</h2>
+                <div class="grid-container" id="alphabet-grid"></div>
+            </section>
+
+            <section id="animals" class="content-section" role="main" aria-labelledby="animals-title">
+                <h2 id="animals-title" class="section-title">Learn Animals</h2>
+                <div class="grid-container" id="animals-grid"></div>
+            </section>
+
+            <section id="maths" class="content-section" role="main" aria-labelledby="maths-title">
+                <h2 id="maths-title" class="section-title">Let's Do Maths!</h2>
+                <div id="maths-container"></div>
+            </section>
+
+            <section id="quiz" class="content-section" role="main" aria-labelledby="quiz-title">
+                <h2 id="quiz-title" class="section-title">Quiz Time!</h2>
+                <div class="quiz-container">
+                    <div class="quiz-score" id="quiz-score" aria-live="polite">Score: 0 / 10</div>
+                    <div class="quiz-prompt" id="quiz-prompt" role="alert" aria-live="polite">
+                        Click "Start Quiz" to begin!
+                    </div>
+                    <div class="quiz-grid" id="quiz-grid" role="grid" aria-label="Quiz options"></div>
+                    <div class="quiz-controls">
+                        <button class="quiz-btn" id="start-quiz-btn">Start Quiz</button>
+                        <button class="quiz-btn" id="next-quiz-btn" style="display: none;">Next Question</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="about-modal" aria-hidden="true">
+        <div class="modal" role="dialog" aria-labelledby="about-title" aria-modal="true">
+            <div class="modal-header">
+                <h2 id="about-title">About Learn & Play</h2>
+                <button class="modal-close" aria-label="Close about pop-up">&times;</button>
+            </div>
+            <div class="modal-content">
+                <h3 style="text-align: center; color: var(--color-primary); margin-bottom: var(--spacing-sm);">A fun way to learn the basics!</h3>
+                <p style="text-align: center; margin-bottom: var(--spacing-lg);">
+                    This website is a simple and fun place for kids to learn about shapes, colors, numbers, the alphabet, animals, and basic maths.
+                </p>
+                <p style="text-align: center; font-size: 0.9rem; color: var(--color-text-secondary);">
+                    Developed by <a href="https://www.linkedin.com/in/vasudev-/" target="_blank" rel="noopener noreferrer" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">Vasudev V</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="settings-modal" aria-hidden="true">
+        <div class="modal" role="dialog" aria-labelledby="settings-title" aria-modal="true">
+            <div class="modal-header">
+                <h2 id="settings-title">Settings</h2>
+                <button class="modal-close" aria-label="Close settings">&times;</button>
+            </div>
+            <div class="modal-content">
+                <div class="setting-group">
+                    <label for="voice-select">Voice Language:</label>
+                    <select id="voice-select" class="setting-input">
+                        <option value="en-IN">English (India)</option>
+                        <option value="hi-IN">Hindi</option>
+                        <option value="ta-IN">Tamil</option>
+                        <option value="ml-IN">Malayalam</option>
+                    </select>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="speech-rate">Speech Rate:</label>
+                    <input type="range" id="speech-rate" class="setting-slider" min="0.5" max="2" step="0.1" value="1.5">
+                    <span id="speech-rate-value" class="slider-value">1.5</span>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="speech-pitch">Speech Pitch:</label>
+                    <input type="range" id="speech-pitch" class="setting-slider" min="0.5" max="2" step="0.1" value="1">
+                    <span id="speech-pitch-value" class="slider-value">1.0</span>
+                </div>
+                
+                <div class="setting-group">
+                    <label class="setting-label">
+                        <input type="checkbox" id="high-contrast" class="setting-checkbox">
+                        High Contrast Mode
+                    </label>
+                </div>
+                
+                <div class="setting-group">
+                    <label class="setting-label">
+                        <input type="checkbox" id="sound-effects" class="setting-checkbox" checked>
+                        Sound Effects
+                    </label>
+                </div>
+                
+                <div class="setting-group">
+                    <label>Text Size:</label>
+                    <div class="text-size-controls">
+                        <button class="text-size-btn" id="text-small">Small</button>
+                        <span id="text-normal">Normal</span>
+                        <button class="text-size-btn" id="text-large">Large</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+    <script>
+        const appState = {
+            currentSection: 'shapes',
+            voices: [],
+            selectedVoice: null,
+            speechRate: 1.5,
+            speechPitch: 1,
+            highContrast: false,
+            soundEffects: true,
+            textSize: 'normal',
+            quizState: {
+                active: false,
+                score: 0,
+                currentQuestionIndex: 0,
+                questions: []
+            },
+            mathState: {
+                operation: 'addition',
+                problem: null
+            }
+        };
+
+        const domElements = {
+            navButtons: document.querySelectorAll('.nav-btn'),
+            contentSections: document.querySelectorAll('.content-section'),
+            settingsButton: document.querySelector('.settings-btn'),
+            aboutButton: document.querySelector('.about-btn'),
+            settingsModal: document.getElementById('settings-modal'),
+            aboutModal: document.getElementById('about-modal'),
+            modalCloses: document.querySelectorAll('.modal-close'),
+            voiceSelect: document.getElementById('voice-select'),
+            speechRate: document.getElementById('speech-rate'),
+            speechRateValue: document.getElementById('speech-rate-value'),
+            speechPitch: document.getElementById('speech-pitch'),
+            speechPitchValue: document.getElementById('speech-pitch-value'),
+            highContrast: document.getElementById('high-contrast'),
+            soundEffects: document.getElementById('sound-effects'),
+            textSmall: document.getElementById('text-small'),
+            textNormal: document.getElementById('text-normal'),
+            textLarge: document.getElementById('text-large'),
+            quizPrompt: document.getElementById('quiz-prompt'),
+            quizScore: document.getElementById('quiz-score'),
+            quizGrid: document.getElementById('quiz-grid'),
+            startQuizBtn: document.getElementById('start-quiz-btn'),
+            nextQuizBtn: document.getElementById('next-quiz-btn'),
+            confettiCanvas: document.getElementById('confetti-canvas'),
+            alphabetGrid: document.getElementById('alphabet-grid'),
+            animalsGrid: document.getElementById('animals-grid'),
+            numbersGrid: document.getElementById('numbers-grid'),
+            mathsContainer: document.getElementById('maths-container'),
+            numberNavContainer: document.getElementById('number-nav-container'),
+            shapesGrid: document.getElementById('shapes-grid'),
+            colorsGrid: document.getElementById('colors-grid')
+        };
+        
+        const shapesData = [ { name: 'Circle', svg: '<circle cx="50" cy="50" r="45" fill="currentColor"/>' }, { name: 'Square', svg: '<rect x="10" y="10" width="80" height="80" rx="10" fill="currentColor"/>' }, { name: 'Triangle', svg: '<polygon points="50,10 90,85 10,85" fill="currentColor"/>' }, { name: 'Rectangle', svg: '<rect x="5" y="25" width="90" height="50" rx="10" fill="currentColor"/>' }, { name: 'Star', svg: '<polygon points="50,5 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="currentColor"/>' }, { name: 'Heart', svg: '<path d="M50,90 C50,90 10,50 10,30 C10,20 20,10 30,10 C40,10 50,20 50,30 C50,20 60,10 70,10 C80,10 90,20 90,30 C90,50 50,90 50,90 Z" fill="currentColor"/>' }, { name: 'Oval', svg: '<ellipse cx="50" cy="50" rx="45" ry="30" fill="currentColor"/>' }, { name: 'Pentagon', svg: '<polygon points="50,5 95,40 78,95 22,95 5,40" fill="currentColor"/>' }];
+        const colorsData = [ { name: 'Red', hex: '#EF4444' }, { name: 'Green', hex: '#22C55E' }, { name: 'Blue', hex: '#3B82F6' }, { name: 'Yellow', hex: '#FDE047' }, { name: 'Orange', hex: '#F97316' }, { name: 'Purple', hex: '#A855F7' }, { name: 'Black', hex: '#1F2937' }, { name: 'White', hex: '#FFFFFF', border: '2px solid var(--color-border)' }, { name: 'Pink', hex: '#EC4899' }, { name: 'Brown', hex: '#78350F' }, { name: 'Gray', hex: '#9CA3AF' }, { name: 'Cyan', hex: '#06B6D4' }];
+        const alphabetData = [ { letter: 'A', word: 'Apple', emoji: '🍎' }, { letter: 'B', word: 'Ball', emoji: '⚽' }, { letter: 'C', word: 'Cat', emoji: '🐈' }, { letter: 'D', word: 'Dog', emoji: '🐕' }, { letter: 'E', word: 'Elephant', emoji: '🐘' }, { letter: 'F', word: 'Fish', emoji: '🐟' }, { letter: 'G', word: 'Goat', emoji: '🐐' }, { letter: 'H', word: 'Hat', emoji: '👒' }, { letter: 'I', word: 'Ice Cream', emoji: '🍦' }, { letter: 'J', word: 'Juice', emoji: '🧃' }, { letter: 'K', word: 'Kite', emoji: '🪁' }, { letter: 'L', word: 'Lion', emoji: '🦁' }, { letter: 'M', word: 'Monkey', emoji: '🐒' }, { letter: 'N', word: 'Nose', emoji: '👃' }, { letter: 'O', word: 'Orange', emoji: '🍊' }, { letter: 'P', word: 'Panda', emoji: '🐼' }, { letter: 'Q', word: 'Queen', emoji: '👑' }, { letter: 'R', word: 'Rainbow', emoji: '🌈' }, { letter: 'S', word: 'Sun', emoji: '☀️' }, { letter: 'T', word: 'Tiger', emoji: '🐅' }, { letter: 'U', word: 'Umbrella', emoji: '☂️' }, { letter: 'V', word: 'Violin', emoji: '🎻' }, { letter: 'W', word: 'Watch', emoji: '⌚' }, { letter: 'X', word: 'Xylophone', emoji: '🎼' }, { letter: 'Y', word: 'Yo-yo', emoji: '🪀' }, { letter: 'Z', word: 'Zebra', emoji: '🦓' }];
+        const animalData = [ { name: 'Lion', emoji: '🦁', fact: 'A lion roars.' }, { name: 'Elephant', emoji: '🐘', fact: 'Elephants are very big.' }, { name: 'Monkey', emoji: '🐒', fact: 'Monkeys like to eat bananas.' }, { name: 'Tiger', emoji: '🐅', fact: 'A tiger has stripes.' }, { name: 'Bear', emoji: '🐻', fact: 'Bears live in the forest.' }, { name: 'Panda', emoji: '🐼', fact: 'Pandas eat bamboo.' }, { name: 'Cow', emoji: '🐄', fact: 'A cow says moo.' }, { name: 'Pig', emoji: '🐖', fact: 'Pigs like to play in the mud.' }, { name: 'Frog', emoji: '🐸', fact: 'A frog can hop.' }, { name: 'Chicken', emoji: '🐔', fact: 'A chicken lays eggs.' }, { name: 'Penguin', emoji: '🐧', fact: 'Penguins live in the cold.' }, { name: 'Duck', emoji: '🦆', fact: 'A duck can swim.' }, { name: 'Owl', emoji: '🦉', fact: 'Owls can see at night.' }, { name: 'Butterfly', emoji: '🦋', fact: 'A butterfly has wings.' }, { name: 'Bee', emoji: '🐝', fact: 'A bee makes honey.' }, { name: 'Ladybug', emoji: '🐞', fact: 'A ladybug has spots.' }, { name: 'Snail', emoji: '🐌', fact: 'A snail is very slow.' }, { name: 'Octopus', emoji: '🐙', fact: 'An octopus lives in the sea.' }, { name: 'Fish', emoji: '🐠', fact: 'A fish can swim.' }, { name: 'Dolphin', emoji: '🐬', fact: 'Dolphins live in the ocean.' }, { name: 'Whale', emoji: '🐳', fact: 'A whale is very big.' }, { name: 'Shark', emoji: '🦈', fact: 'A shark has big teeth.' }, { name: 'Crab', emoji: '🦀', fact: 'A crab has claws.' }, { name: 'Turtle', emoji: '🐢', fact: 'A turtle has a shell.' }];
+        const allQuizQuestions = [
+            { type: 'story', question: 'You have 3 apples 🍎. You get 1 more. How many apples do you have?', options: [{ type: 'number', value: '3', correct: false }, { type: 'number', value: '4', correct: true }, { type: 'number', value: '5', correct: false }] },
+            { type: 'story', question: 'You have 5 cookies 🍪. You eat 2. How many are left?', options: [{ type: 'number', value: '3', correct: true }, { type: 'number', value: '5', correct: false }, { type: 'number', value: '2', correct: false }] },
+            { type: 'story', question: 'A cat 🐈 and a dog 🐕 are playing. How many animals are there?', options: [{ type: 'number', value: '1', correct: false }, { type: 'number', value: '2', correct: true }, { type: 'number', value: '3', correct: false }] },
+            { type: 'story', question: 'A pizza slice 🍕 looks like which shape?', options: [{ type: 'shape', value: 'circle', correct: false }, { type: 'shape', value: 'square', correct: false }, { type: 'shape', value: 'triangle', correct: true }] },
+            { type: 'story', question: 'The sun ☀️ is what color?', options: [{ type: 'color', value: 'blue', correct: false }, { type: 'color', value: 'yellow', correct: true }, { type: 'color', value: 'green', correct: false }] },
+            { type: 'story', question: 'Which animal says "moo"?', options: [{ type: 'emoji', value: '🐄', correct: true }, { type: 'emoji', value: '🐖', correct: false }, { type: 'emoji', value: '🐔', correct: false }] },
+            { type: 'story', question: 'What is the first letter of 🍎?', options: [{ type: 'text', value: 'C', correct: false }, { type: 'text', value: 'B', correct: false }, { type: 'text', value: 'A', correct: true }] },
+            { type: 'story', question: 'You have 2 red balls 🔴 and 1 blue ball 🔵. How many balls in total?', options: [{ type: 'number', value: '2', correct: false }, { type: 'number', value: '3', correct: true }, { type: 'number', value: '1', correct: false }] },
+            { type: 'story', question: 'A door 🚪 is usually what shape?', options: [{ type: 'shape', value: 'rectangle', correct: true }, { type: 'shape', value: 'circle', correct: false }, { type: 'shape', value: 'star', correct: false }] },
+            { type: 'story', question: 'What color is grass 🌱?', options: [{ type: 'color', value: 'red', correct: false }, { type: 'color', value: 'green', correct: true }, { type: 'color', value: 'yellow', correct: false }] },
+            { type: 'story', question: 'Which animal has a long trunk?', options: [{ type: 'emoji', value: '🐘', correct: true }, { type: 'emoji', value: '🐒', correct: false }, { type: 'emoji', value: '🐅', correct: false }] },
+            { type: 'story', question: 'What is the first letter of 🌙?', options: [{ type: 'text', value: 'S', correct: false }, { type: 'text', value: 'M', correct: true }, { type: 'text', value: 'N', correct: false }] },
+            { type: 'story', question: 'You have 4 balls ⚽. You give 1 away. How many are left?', options: [{ type: 'number', value: '3', correct: true }, { type: 'number', value: '4', correct: false }, { type: 'number', value: '5', correct: false }] },
+            { type: 'story', question: 'A button on a shirt is usually what shape?', options: [{ type: 'shape', value: 'square', correct: false }, { type: 'shape', value: 'circle', correct: true }, { type: 'shape', value: 'star', correct: false }] },
+            { type: 'story', question: 'Which animal says "oink"?', options: [{ type: 'emoji', value: '🐄', correct: false }, { type: 'emoji', value: '🐖', correct: true }, { type: 'emoji', value: '🦆', correct: false }] }
+        ];
+
+        function generateShapes() {
+            shapesData.forEach(shape => {
+                const card = document.createElement('div');
+                card.className = 'learning-card';
+                card.tabIndex = 0;
+                card.setAttribute('data-speak', shape.name);
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `${shape.name} shape`);
+                card.innerHTML = `<div class="card-visual"><svg class="shape-svg" viewBox="0 0 100 100">${shape.svg}</svg></div><div class="card-label">${shape.name}</div><button class="speak-btn" aria-label="Speak ${shape.name} again" title="Hear again">🔊</button>`;
+                domElements.shapesGrid.appendChild(card);
+            });
+        }
+
+        function generateColors() {
+            colorsData.forEach(color => {
+                const card = document.createElement('div');
+                card.className = 'learning-card';
+                card.tabIndex = 0;
+                card.setAttribute('data-speak', color.name);
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `${color.name} color`);
+                card.innerHTML = `<div class="card-visual"><div class="color-tile" style="background-color: ${color.hex}; border: ${color.border || 'none'};"></div></div><div class="card-label">${color.name}</div><button class="speak-btn" aria-label="Speak ${color.name} again" title="Hear again">🔊</button>`;
+                domElements.colorsGrid.appendChild(card);
+            });
+        }
+
+        function setupNumbersSection() {
+            for (let i = 0; i < 10; i++) {
+                const start = i * 10 + 1;
+                const end = start + 9;
+                const btn = document.createElement('button');
+                btn.className = 'math-btn number-nav-btn';
+                btn.textContent = `${start}-${end}`;
+                btn.onclick = () => {
+                    document.querySelector('.number-nav-btn.active').classList.remove('active');
+                    btn.classList.add('active');
+                    displayNumberGroup(start, end);
+                };
+                domElements.numberNavContainer.appendChild(btn);
+            }
+            domElements.numberNavContainer.firstChild.classList.add('active');
+            displayNumberGroup(1, 10);
+        }
+
+        function displayNumberGroup(start, end) {
+            domElements.numbersGrid.innerHTML = '';
+            for (let i = start; i <= end; i++) {
+                const card = document.createElement('div');
+                card.className = 'learning-card number-card';
+                card.tabIndex = 0;
+                card.setAttribute('data-speak', `Number ${i}`);
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `Number ${i}`);
+                
+                let cardContent = `<div class="number-display">${i}</div>`;
+                if (i <= 10) {
+                    cardContent += `<div class="dots-display">${'🍎'.repeat(i)}</div>`;
+                }
+                cardContent += `<button class="speak-btn" aria-label="Speak again" title="Hear again">🔊</button>`;
+                
+                card.innerHTML = cardContent;
+                domElements.numbersGrid.appendChild(card);
+            }
+        }
+
+        function generateAlphabetCards() {
+            alphabetData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'learning-card';
+                card.tabIndex = 0;
+                card.setAttribute('data-speak', `${item.letter} is for ${item.word}`);
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `${item.letter} is for ${item.word}`);
+                card.innerHTML = `<div class="alphabet-display"><span>${item.letter.toUpperCase()}</span><span>${item.letter.toLowerCase()}</span></div><div class="dots-display alphabet-emoji-display">${item.emoji}</div><div class="card-label">${item.word}</div><button class="speak-btn" aria-label="Speak again" title="Hear again">🔊</button>`;
+                domElements.alphabetGrid.appendChild(card);
+            });
+        }
+
+        function generateAnimalCards() {
+            animalData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'learning-card';
+                card.tabIndex = 0;
+                card.setAttribute('data-speak', `${item.name}. ${item.fact}`);
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `${item.name}. ${item.fact}`);
+                card.innerHTML = `<div class="animal-emoji">${item.emoji}</div><div class="card-label">${item.name}</div><div class="fun-fact">${item.fact}</div><button class="speak-btn" aria-label="Speak again" title="Hear again">🔊</button>`;
+                domElements.animalsGrid.appendChild(card);
+            });
+        }
+
+        function generateMathsSection() {
+            domElements.mathsContainer.innerHTML = `
+                <div class="math-op-selector">
+                    <button class="math-btn math-op-btn active" data-op="addition">Addition (+)</button>
+                    <button class="math-btn math-op-btn" data-op="subtraction">Subtraction (-)</button>
+                    <button class="math-btn math-op-btn" data-op="multiplication">Multiplication (×)</button>
+                </div>
+                <div class="math-problem-display">
+                    <div id="math-problem-visual"></div>
+                    <div id="math-problem-text"></div>
+                </div>
+                <div id="math-options-grid"></div>
+                <div id="math-feedback"></div>
+                <button class="math-btn" id="next-math-btn">Next</button>
+            `;
+            
+            document.querySelectorAll('.math-op-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelector('.math-op-btn.active').classList.remove('active');
+                    btn.classList.add('active');
+                    appState.mathState.operation = btn.dataset.op;
+                    generateMathProblem();
+                });
+            });
+
+            document.getElementById('next-math-btn').addEventListener('click', generateMathProblem);
+        }
+
+        function initApp() {
+            generateShapes();
+            generateColors();
+            setupNumbersSection();
+            generateAlphabetCards();
+            generateAnimalCards();
+            generateMathsSection();
+            generateMathProblem();
+            loadVoices();
+            setupEventListeners();
+            loadSettings();
+            updateUI();
+        }
+
+        function loadVoices() {
+            if (!('speechSynthesis' in window)) return;
+            
+            const setVoices = () => {
+                appState.voices = speechSynthesis.getVoices();
+                if (appState.voices.length > 0) {
+                    populateVoiceSelect();
+                }
+            };
+
+            setVoices();
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = setVoices;
+            }
+        }
+
+        function populateVoiceSelect() {
+            if (!domElements.voiceSelect) return;
+            domElements.voiceSelect.innerHTML = '';
+            const supportedVoices = appState.voices.filter(v => v.lang.includes('en') || v.lang.includes('hi') || v.lang.includes('ta') || v.lang.includes('ml'));
+            supportedVoices.forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.name;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                domElements.voiceSelect.appendChild(option);
+            });
+            if (appState.selectedVoice) {
+                domElements.voiceSelect.value = appState.selectedVoice;
+            } else if (supportedVoices.length > 0) {
+                appState.selectedVoice = supportedVoices[0].name;
+                domElements.voiceSelect.value = supportedVoices[0].name;
+            }
+        }
+
+        function setupEventListeners() {
+            document.body.addEventListener('click', (e) => {
+                const navBtn = e.target.closest('.nav-btn:not(.settings-btn):not(.about-btn)');
+                if (navBtn) {
+                    handleNavigation(navBtn);
+                    return;
+                }
+
+                const learningCard = e.target.closest('.learning-card');
+                if (learningCard) {
+                    handleCardClick(learningCard);
+                    return;
+                }
+
+                const speakBtn = e.target.closest('.speak-btn');
+                if (speakBtn) {
+                    e.stopPropagation();
+                    speakCardContent(speakBtn.closest('.learning-card'));
+                    return;
+                }
+            });
+
+            domElements.aboutButton.addEventListener('click', openAboutModal);
+            domElements.settingsButton.addEventListener('click', openSettings);
+            domElements.modalCloses.forEach(btn => btn.addEventListener('click', () => {
+                closeModal(btn.closest('.modal-overlay'));
+            }));
+            
+            domElements.settingsModal.addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(domElements.settingsModal); });
+            domElements.aboutModal.addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(domElements.aboutModal); });
+            
+            domElements.voiceSelect.addEventListener('change', e => { appState.selectedVoice = e.target.value; saveSettings(); });
+            domElements.speechRate.addEventListener('input', e => { appState.speechRate = parseFloat(e.target.value); domElements.speechRateValue.textContent = e.target.value; saveSettings(); });
+            domElements.speechPitch.addEventListener('input', e => { appState.speechPitch = parseFloat(e.target.value); domElements.speechPitchValue.textContent = e.target.value; saveSettings(); });
+            domElements.highContrast.addEventListener('change', e => { appState.highContrast = e.target.checked; updateUI(); saveSettings(); });
+            domElements.soundEffects.addEventListener('change', e => { appState.soundEffects = e.target.checked; saveSettings(); });
+            domElements.textSmall.addEventListener('click', () => { appState.textSize = 'small'; updateUI(); saveSettings(); });
+            domElements.textLarge.addEventListener('click', () => { appState.textSize = 'large'; updateUI(); saveSettings(); });
+            
+            domElements.startQuizBtn.addEventListener('click', startQuiz);
+            domElements.nextQuizBtn.addEventListener('click', nextQuizQuestion);
+        }
+
+        function handleNavigation(navBtn) {
+            const section = navBtn.dataset.section;
+            if (!section || !document.getElementById(section)) return;
+
+            domElements.navButtons.forEach(btn => { 
+                btn.classList.remove('active'); 
+                btn.setAttribute('aria-pressed', 'false'); 
+            });
+            navBtn.classList.add('active');
+            navBtn.setAttribute('aria-pressed', 'true');
+            
+            domElements.contentSections.forEach(sec => sec.classList.remove('active'));
+            document.getElementById(section).classList.add('active');
+            
+            appState.currentSection = section;
+            if (section === 'quiz' && !appState.quizState.active) resetQuiz();
+            if (section === 'maths') generateMathProblem();
+        }
+
+        function handleCardClick(card) {
+            speakCardContent(card);
+            card.classList.add('card-animate');
+            setTimeout(() => card.classList.remove('card-animate'), 400);
+        }
+
+        function speakCardContent(card) {
+            if (!('speechSynthesis' in window) || !card.dataset.speak) return;
+            speechSynthesis.cancel();
+            const textToSpeak = card.dataset.speak;
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.rate = appState.speechRate;
+            utterance.pitch = appState.speechPitch;
+            if (appState.selectedVoice) {
+                const voice = speechSynthesis.getVoices().find(v => v.name === appState.selectedVoice);
+                if (voice) utterance.voice = voice;
+            }
+            speechSynthesis.speak(utterance);
+        }
+
+        function openAboutModal() { domElements.aboutModal.classList.add('active'); domElements.aboutModal.setAttribute('aria-hidden', 'false'); }
+        function openSettings() { domElements.settingsModal.classList.add('active'); domElements.settingsModal.setAttribute('aria-hidden', 'false'); }
+        function closeModal(modal) { modal.classList.remove('active'); modal.setAttribute('aria-hidden', 'true'); }
+
+        function loadSettings() {
+            const savedSettings = localStorage.getItem('learningAppSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                Object.assign(appState, settings);
+            }
+            domElements.voiceSelect.value = appState.selectedVoice;
+            domElements.speechRate.value = appState.speechRate;
+            domElements.speechRateValue.textContent = appState.speechRate.toFixed(1);
+            domElements.speechPitch.value = appState.speechPitch;
+            domElements.speechPitchValue.textContent = appState.speechPitch.toFixed(1);
+            domElements.highContrast.checked = appState.highContrast;
+            domElements.soundEffects.checked = appState.soundEffects;
+        }
+        function saveSettings() {
+            const { selectedVoice, speechRate, speechPitch, highContrast, soundEffects, textSize } = appState;
+            localStorage.setItem('learningAppSettings', JSON.stringify({ selectedVoice, speechRate, speechPitch, highContrast, soundEffects, textSize }));
+        }
+
+        function updateUI() {
+            document.body.classList.toggle('high-contrast', appState.highContrast);
+            document.body.classList.remove('text-small', 'text-large');
+            if (appState.textSize !== 'normal') document.body.classList.add(`text-${appState.textSize}`);
+        }
+
+        function generateMathProblem() {
+            let num1, num2, correctAnswer, symbol;
+            const op = appState.mathState.operation;
+            
+            if (op === 'addition') {
+                num1 = Math.floor(Math.random() * 9) + 1;
+                num2 = Math.floor(Math.random() * 9) + 1;
+                correctAnswer = num1 + num2;
+                symbol = '+';
+            } else if (op === 'subtraction') {
+                num1 = Math.floor(Math.random() * 9) + 2;
+                num2 = Math.floor(Math.random() * (num1 - 1)) + 1;
+                correctAnswer = num1 - num2;
+                symbol = '-';
+            } else if (op === 'multiplication') {
+                num1 = Math.floor(Math.random() * 5) + 1;
+                num2 = Math.floor(Math.random() * 5) + 1;
+                correctAnswer = num1 * num2;
+                symbol = '×';
+            }
+
+            const options = new Set([correctAnswer]);
+            while (options.size < 3) {
+                const wrongAnswer = correctAnswer + (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+                if (wrongAnswer >= 0 && wrongAnswer !== correctAnswer) {
+                    options.add(wrongAnswer);
+                }
+            }
+            
+            appState.mathState.problem = {
+                num1, num2, symbol, correctAnswer,
+                options: Array.from(options).sort(() => Math.random() - 0.5)
+            };
+            
+            displayMathProblem();
+        }
+
+        function displayMathProblem() {
+            const { num1, num2, symbol, options } = appState.mathState.problem;
+            const visualEl = document.getElementById('math-problem-visual');
+            const textEl = document.getElementById('math-problem-text');
+            const optionsGridEl = document.getElementById('math-options-grid');
+            const feedbackEl = document.getElementById('math-feedback');
+            
+            visualEl.textContent = '🍎'.repeat(num1) + ` ${symbol} ` + '🍎'.repeat(num2);
+            textEl.textContent = `${num1} ${symbol} ${num2} = ?`;
+            feedbackEl.textContent = '';
+            optionsGridEl.innerHTML = '';
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'math-btn math-option-btn';
+                btn.textContent = opt;
+                btn.onclick = () => checkMathAnswer(opt, btn);
+                optionsGridEl.appendChild(btn);
+            });
+        }
+
+        function checkMathAnswer(selectedAnswer, btnElement) {
+            const { correctAnswer } = appState.mathState.problem;
+            const feedbackEl = document.getElementById('math-feedback');
+            const options = document.getElementById('math-options-grid').children;
+
+            for (let btn of options) {
+                btn.disabled = true;
+            }
+
+            if (selectedAnswer === correctAnswer) {
+                btnElement.classList.add('correct');
+                feedbackEl.textContent = 'Correct!';
+                feedbackEl.style.color = 'var(--color-success)';
+                if (appState.soundEffects) speakText('Correct!');
+                showConfetti();
+            } else {
+                btnElement.classList.add('incorrect');
+                feedbackEl.textContent = `Try again! The answer is ${correctAnswer}.`;
+                feedbackEl.style.color = 'var(--color-error)';
+                if (appState.soundEffects) speakText('Try again');
+            }
+        }
+
+        function resetQuiz() {
+            appState.quizState = { active: false, score: 0, currentQuestionIndex: 0, questions: [] };
+            domElements.quizPrompt.textContent = 'Click "Start Quiz" to begin!';
+            domElements.quizScore.textContent = 'Score: 0 / 10';
+            domElements.quizGrid.innerHTML = '';
+            domElements.startQuizBtn.style.display = 'block';
+            domElements.nextQuizBtn.style.display = 'none';
+        }
+        function startQuiz() {
+            appState.quizState.active = true;
+            appState.quizState.score = 0;
+            appState.quizState.currentQuestionIndex = 0;
+            appState.quizState.questions = [...allQuizQuestions].sort(() => Math.random() - 0.5).slice(0, 10);
+            
+            domElements.quizScore.textContent = `Score: 0 / ${appState.quizState.questions.length}`;
+            domElements.startQuizBtn.style.display = 'none';
+            domElements.nextQuizBtn.style.display = 'block';
+            domElements.nextQuizBtn.disabled = true;
+            nextQuizQuestion();
+        }
+        function nextQuizQuestion() {
+            if (appState.quizState.currentQuestionIndex >= appState.quizState.questions.length) {
+                endQuiz();
+                return;
+            }
+            const currentQuestion = appState.quizState.questions[appState.quizState.currentQuestionIndex];
+            domElements.quizPrompt.textContent = currentQuestion.question;
+            domElements.quizGrid.innerHTML = '';
+            domElements.nextQuizBtn.disabled = true;
+
+            currentQuestion.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.tabIndex = 0;
+                optionElement.setAttribute('role', 'button');
+                optionElement.setAttribute('aria-label', `Option ${index + 1}: ${option.value}`);
+                if (option.type === 'shape') optionElement.innerHTML = `<svg class="shape-svg" viewBox="0 0 100 100">${getShapeSvg(option.value)}</svg>`;
+                else if (option.type === 'color') optionElement.innerHTML = `<div class="color-tile" style="background-color: ${getColorHex(option.value)};"></div>`;
+                else if (option.type === 'number' || option.type === 'text' || option.type === 'emoji') optionElement.innerHTML = `<div class="number-display">${option.value}</div>`;
+                optionElement.addEventListener('click', () => checkAnswer(option, optionElement));
+                optionElement.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); checkAnswer(option, optionElement); } });
+                domElements.quizGrid.appendChild(optionElement);
+            });
+        }
+        function checkAnswer(option, element) {
+            if (domElements.quizGrid.querySelector('.correct, .incorrect')) return;
+            if (option.correct) {
+                element.classList.add('correct');
+                appState.quizState.score++;
+                domElements.quizScore.textContent = `Score: ${appState.quizState.score} / ${appState.quizState.questions.length}`;
+                if (appState.soundEffects) speakText('Correct!');
+                showConfetti();
+            } else {
+                element.classList.add('incorrect');
+                if (appState.soundEffects) speakText('Incorrect');
+            }
+            appState.quizState.currentQuestionIndex++;
+            domElements.nextQuizBtn.disabled = false;
+        }
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) return;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = appState.speechRate;
+            utterance.pitch = appState.speechPitch;
+            if (appState.selectedVoice) {
+                const voice = speechSynthesis.getVoices().find(v => v.name === appState.selectedVoice);
+                if (voice) utterance.voice = voice;
+            }
+            speechSynthesis.speak(utterance);
+        }
+        function getShapeSvg(shape) {
+            const shapes = { 'circle': '<circle cx="50" cy="50" r="40" fill="currentColor"/>', 'square': '<rect x="10" y="10" width="80" height="80" rx="10" fill="currentColor"/>', 'triangle': '<polygon points="50,10 90,85 10,85" fill="currentColor"/>', 'rectangle': '<rect x="5" y="25" width="90" height="50" rx="10" fill="currentColor"/>', 'star': '<polygon points="50,5 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="currentColor"/>', 'heart': '<path d="M50,90 C50,90 10,50 10,30 C10,20 20,10 30,10 C40,10 50,20 50,30 C50,20 60,10 70,10 C80,10 90,20 90,30 C90,50 50,90 50,90 Z" fill="currentColor"/>' };
+            return shapes[shape] || '';
+        }
+        function getColorHex(colorName) {
+            const colorMap = { 'red': '#EF4444', 'green': '#22C55E', 'blue': '#3B82F6', 'yellow': '#FDE047', 'orange': '#F97316', 'purple': '#A855F7', 'black': '#1F2937', 'white': '#FFFFFF' };
+            return colorMap[colorName] || '#FFFFFF';
+        }
+        function endQuiz() {
+            domElements.quizPrompt.textContent = `Quiz completed! Your final score: ${appState.quizState.score} / ${appState.quizState.questions.length}`;
+            domElements.quizGrid.innerHTML = '';
+            domElements.nextQuizBtn.style.display = 'none';
+            domElements.startQuizBtn.style.display = 'block';
+            domElements.startQuizBtn.textContent = 'Play Again';
+            if (appState.soundEffects) speakText(`Quiz completed! Your score is ${appState.quizState.score} out of ${appState.quizState.questions.length}`);
+            if (appState.quizState.score >= appState.quizState.questions.length / 2) showConfetti();
+            appState.quizState.active = false;
+        }
+        function showConfetti() {
+            const canvas = domElements.confettiCanvas;
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const confettiPieces = [];
+            const colors = ['#5A67D8', '#38A169', '#E53E3E', '#DD6B20', '#A855F7'];
+            for (let i = 0; i < 100; i++) {
+                confettiPieces.push({ x: Math.random() * canvas.width, y: -Math.random() * canvas.height, size: Math.random() * 10 + 5, color: colors[Math.floor(Math.random() * colors.length)], speed: Math.random() * 5 + 2, rotation: Math.random() * 360, rotationSpeed: Math.random() * 10 - 5 });
+            }
+            let animationId;
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let stillFalling = false;
+                confettiPieces.forEach(p => {
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    ctx.restore();
+                    p.y += p.speed;
+                    p.x += Math.sin(p.y / 30) * 2;
+                    p.rotation += p.rotationSpeed;
+                    if (p.y < canvas.height) stillFalling = true;
+                });
+                if (stillFalling) animationId = requestAnimationFrame(animate);
+                else { cancelAnimationFrame(animationId); ctx.clearRect(0, 0, canvas.width, canvas.height); }
+            }
+            animate();
+        }
+
+        document.addEventListener('DOMContentLoaded', initApp);
+        window.addEventListener('resize', () => { if (domElements.confettiCanvas) { domElements.confettiCanvas.width = window.innerWidth; domElements.confettiCanvas.height = window.innerHeight; } });
+    </script>
+</body>
+</html>
