@@ -946,12 +946,12 @@
             { type: 'story', question: 'A cat 🐈 and a dog 🐕 are playing. How many animals are there?', options: [{ type: 'number', value: '1', correct: false }, { type: 'number', value: '2', correct: true }, { type: 'number', value: '3', correct: false }] },
             { type: 'story', question: 'A pizza slice 🍕 looks like which shape?', options: [{ type: 'shape', value: 'circle', correct: false }, { type: 'shape', value: 'square', correct: false }, { type: 'shape', value: 'triangle', correct: true }] },
             { type: 'story', question: 'The sun ☀️ is what color?', options: [{ type: 'color', value: 'blue', correct: false }, { type: 'color', value: 'yellow', correct: true }, { type: 'color', value: 'green', correct: false }] },
-            { type: 'story', question: 'Which animal says "moo"?', options: [{ type: 'emoji', value: '🐄', correct: true }, { type: 'emoji', value: '🐖', correct: false }, { type: 'emoji', value: '🐔', correct: false }] },
+            { type: 'story', question: 'Which animal says "moo"?', options: [{ type: 'emoji', value: '🐄', correct: true }, { type: 'emoji', value: '🐖', correct: false }, { type: 'emoji', value: '�', correct: false }] },
             { type: 'story', question: 'What is the first letter of 🍎?', options: [{ type: 'text', value: 'C', correct: false }, { type: 'text', value: 'B', correct: false }, { type: 'text', value: 'A', correct: true }] },
             { type: 'story', question: 'You have 2 red balls 🔴 and 1 blue ball 🔵. How many balls in total?', options: [{ type: 'number', value: '2', correct: false }, { type: 'number', value: '3', correct: true }, { type: 'number', value: '1', correct: false }] },
             { type: 'story', question: 'A door 🚪 is usually what shape?', options: [{ type: 'shape', value: 'rectangle', correct: true }, { type: 'shape', value: 'circle', correct: false }, { type: 'shape', value: 'star', correct: false }] },
             { type: 'story', question: 'What color is grass 🌱?', options: [{ type: 'color', value: 'red', correct: false }, { type: 'color', value: 'green', correct: true }, { type: 'color', value: 'yellow', correct: false }] },
-            { type: 'story', question: 'Which animal has a long trunk?', options: [{ type: 'emoji', value: '🐘', correct: true }, { type: 'emoji', value: '🐒', correct: false }, { type: 'emoji', value: '�', correct: false }] },
+            { type: 'story', question: 'Which animal has a long trunk?', options: [{ type: 'emoji', value: '🐘', correct: true }, { type: 'emoji', value: '🐒', correct: false }, { type: 'emoji', value: '🐅', correct: false }] },
             { type: 'story', question: 'What is the first letter of 🌙?', options: [{ type: 'text', value: 'S', correct: false }, { type: 'text', value: 'M', correct: true }, { type: 'text', value: 'N', correct: false }] },
             { type: 'story', question: 'You have 4 balls ⚽. You give 1 away. How many are left?', options: [{ type: 'number', value: '3', correct: true }, { type: 'number', value: '4', correct: false }, { type: 'number', value: '5', correct: false }] },
             { type: 'story', question: 'A button on a shirt is usually what shape?', options: [{ type: 'shape', value: 'square', correct: false }, { type: 'shape', value: 'circle', correct: true }, { type: 'shape', value: 'star', correct: false }] },
@@ -1331,7 +1331,7 @@
                 btnElement.classList.add('correct');
                 feedbackEl.textContent = 'Correct!';
                 feedbackEl.style.color = 'var(--color-success)';
-                if (appState.soundEffects) speakText('Correct!');
+                // if (appState.soundEffects) speakText('Correct!');
                 showConfetti();
             } else {
                 btnElement.classList.add('incorrect');
@@ -1391,7 +1391,7 @@
                 element.classList.add('correct');
                 appState.quizState.score++;
                 domElements.quizScore.textContent = `Score: ${appState.quizState.score} / ${appState.quizState.questions.length}`;
-                if (appState.soundEffects) speakText('Correct!');
+                // if (appState.soundEffects) speakText('Correct!');
                 showConfetti();
             } else {
                 element.classList.add('incorrect');
